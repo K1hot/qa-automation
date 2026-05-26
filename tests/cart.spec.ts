@@ -1,8 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { login } from '../utils/login';
 
-test('user can add product to cart', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   await page.goto('https://www.saucedemo.com');
+});
+
+test('user can add product to cart', async ({ page }) => {
 
   await login(page, 'standard_user', 'secret_sauce');
 
