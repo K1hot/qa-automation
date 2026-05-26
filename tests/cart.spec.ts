@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { login } from '../utils/login';
+import { LoginPage } from '../pages/LoginPage';
+import { InventoryPage } from '../pages/InventoryPage';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('https://www.saucedemo.com');
@@ -7,22 +8,29 @@ test.beforeEach(async ({ page }) => {
 
 test('user can add product to cart', async ({ page }) => {
 
-  await login(page, 'standard_user', 'secret_sauce');
-
-  const addButton = page.locator('button:has-text("Add to cart")').first();
+  const loginPage = new LoginPage(page);
+  const inventoryPage = new InventoryPage(page);
   
-  await addButton.click();
+  await loginPage.login(
+  'standard_user',
+  'secret_sauce'
+  );
+
+  await inventoryPage.addFirstProductToCart();
 
   await expect(
-    page.locator('button:has-text("Remove")').first()
-  ).toBeVisible();
+  inventoryPage.firstRemoveButton
+).toBeVisible();
 
-  await page.locator('.shopping_cart_link').click();
+  await expect(
+    inventoryPage.cartBadge
+  ).toHaveText('1');
+
+  await inventoryPage.openCart();
+
   await expect(page.locator('.inventory_item_name')).toBeVisible();
-
-  await expect(page.locator('.shopping_cart_badge')
-).toHaveText('1');
-  });
+});
 
   
 
+ 

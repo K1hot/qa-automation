@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test';
-import { login } from '../utils/login';
+import { LoginPage } from '../pages/LoginPage';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('https://www.saucedemo.com');
 
-  await login(page, 'standard_user', 'secret_sauce' );
+  const loginPage = new LoginPage(page);
+
+  await loginPage.login('standard_user', 'secret_sauce' );
 });
 
 test('product title is visible', async ({ page }) => {
