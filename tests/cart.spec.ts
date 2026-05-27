@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
+import { CartPage } from '../pages/CartPage';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('https://www.saucedemo.com');
@@ -10,7 +11,8 @@ test('user can add product to cart', async ({ page }) => {
 
   const loginPage = new LoginPage(page);
   const inventoryPage = new InventoryPage(page);
-  
+  const cartPage = new CartPage(page);
+
   await loginPage.login(
   'standard_user',
   'secret_sauce'
@@ -28,7 +30,8 @@ test('user can add product to cart', async ({ page }) => {
 
   await inventoryPage.openCart();
 
-  await expect(page.locator('.inventory_item_name')).toBeVisible();
+  await expect(
+    cartPage.productName).toBeVisible();
 });
 
   
