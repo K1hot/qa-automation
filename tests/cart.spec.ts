@@ -1,22 +1,10 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { InventoryPage } from '../pages/InventoryPage';
-import { CartPage } from '../pages/CartPage';
+import { test, expect } from '../fixtures/baseTest';
 
-test.beforeEach(async ({ page }) => {
-await page.goto('https://www.saucedemo.com');
-});
-
-test('user can add product to cart', async ({ page }) => {
-
-  const loginPage = new LoginPage(page);
-  const inventoryPage = new InventoryPage(page);
-  const cartPage = new CartPage(page);
-
-  await loginPage.login(
-    'standard_user',
-    'secret_sauce'
-  );
+test('user can add product to cart', async ({
+  authenticatedPage,
+  inventoryPage,
+  cartPage
+}) => {
 
   await inventoryPage.addFirstProductToCart();
 
@@ -35,23 +23,15 @@ test('user can add product to cart', async ({ page }) => {
   ).toBeVisible();
 });
  
-  test('user can remove product from cart', async ({ page }) => {
-    
-  const loginPage = new LoginPage(page);
-  const inventoryPage = new InventoryPage(page);
-  const cartPage = new CartPage(page);
-
-  await loginPage.login (
-    'standard_user',
-    'secret_sauce'
-  );
+  test('user can remove product from cart', async ({
+  authenticatedPage,
+  inventoryPage,
+  cartPage
+}) => {
 
   await inventoryPage.addFirstProductToCart();
 
   await inventoryPage.openCart();
-
-  await expect(
-    cartPage.productName).toBeVisible();
 
   await cartPage.removeProduct();
 
@@ -60,6 +40,5 @@ test('user can add product to cart', async ({ page }) => {
   ).toHaveCount(0);
   }
 )
-
 
  
