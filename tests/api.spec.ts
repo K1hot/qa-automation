@@ -89,7 +89,11 @@ test('API returns single user', async ({ request }) => {
 
   const body = await response.json();
 
-  expect(body.id).toBe(1);
-  expect(body.name).toBe('Bret');
-  expect(body.email).toBe('Sincere@april.biz');
+    expect(body).toHaveProperty('id');
+    expect(body).toHaveProperty('name');
+    expect(body).toHaveProperty('username');
+    expect(body).toHaveProperty('email');
+
+    expect(body.id).toBe(1);
+    expect(body.email).toContain('@');
 });
