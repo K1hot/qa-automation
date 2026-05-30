@@ -88,12 +88,71 @@ test('API returns single user', async ({ request }) => {
   expect(response.status()).toBe(200);
 
   const body = await response.json();
+  const firstUser = body[0];
 
     expect(body).toHaveProperty('id');
     expect(body).toHaveProperty('name');
     expect(body).toHaveProperty('username');
     expect(body).toHaveProperty('email');
+    expect(body.address.city).toBe('Gwenborough');
 
     expect(body.id).toBe(1);
     expect(body.email).toContain('@');
+});
+
+test('API returns users with required fields', async ({ request }) => {
+
+  const response = await request.get(
+    'https://jsonplaceholder.typicode.com/users'
+  );
+
+  expect(response.status()).toBe(200);
+
+  const body = await response.json();
+
+  expect(body.length).toBeGreaterThan(0);
+
+  for (const user of body) {
+
+    expect(user).toHaveProperty('id');
+    expect(user).toHaveProperty('name');
+    expect(user).toHaveProperty('email');
+
+    expect(user.name).toBeTruthy();
+    expect(user.email).toContain('@');
+  }
+});
+
+test('API user fields have correct types', async ({ request }) => {
+
+  const response = await request.get(
+    'https://jsonplaceholder.typicode.com/users/1'
+  );
+
+  expect(response.status()).toBe(200);
+
+  const body = await response.json();
+
+  expect(typeof body.id).toBe('number');
+
+  expect(typeof body.name).toBe('string');
+
+  expect(typeof body.email).toBe('string');
+}); 
+
+test('API filters comments by post id', async ({ request }) => {
+
+  const response = await request.get(
+    'https://jsonplaceholder.typicode.com/comments?postId=1'
+  );
+
+  expect(response.status()).toBe(200);
+
+  const body = await response.json();
+
+  expect(body.length).toBeGreaterThan(0);
+
+  for (const comment of body) {
+    expect(comment.postId).toBe(1);
+  }
 });
