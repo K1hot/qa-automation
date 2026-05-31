@@ -1,5 +1,6 @@
 import { test, expect, request } from '@playwright/test';
 import { User } from '../types/User';
+import { Post } from '../types/Post';
 
 test( 'API returns user list', async ({ request }) => {
  
@@ -171,5 +172,19 @@ test('API user contains company and address', async ({ request }) => {
   expect(body.company.name).toBeTruthy();
 
   expect(body.phone).toBeTruthy();
+});
+
+test('API returns post', async ({ request}) =>{
+  const response = await request.get(
+    'https://jsonplaceholder.typicode.com/posts/1'
+  );
+
+  expect(response.status()).toBe(200);
+
+  const body: Post = await response.json();
+
+  expect(body.id).toBe(1);
+  expect(body.title).toBeTruthy();
+  expect(body.body).toBeTruthy();
 });
 
