@@ -142,8 +142,13 @@ test('API user fields have correct types', async ({ request }) => {
 
 test('API filters comments by post id', async ({ request }) => {
 
-  const response = await request.get(
-    'https://jsonplaceholder.typicode.com/comments?postId=1'
+    const response = await request.get(
+    'https://jsonplaceholder.typicode.com/comments',
+    {
+      params: {
+        postId: 1
+      }
+    }
   );
 
   expect(response.status()).toBe(200);
