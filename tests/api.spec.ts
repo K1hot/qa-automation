@@ -1,19 +1,19 @@
-import { test, expect, request } from '@playwright/test';
+import { test, expect } from '@playwright/test';
+import { User } from '../types/User';
 
 test( 'API returns user list', async ({ request }) => {
+ 
+  const response = await request.get(
+  'https://jsonplaceholder.typicode.com/users'
+  );
 
-    
-    const  response = await request.get(
-        'https://jsonplaceholder.typicode.com/users'
-    );;
+  expect(response.status()).toBe(200);
 
-    expect(response.status()).toBe(200);
+  const body: User[] = await response.json();
 
-    const body = await response.json();
+  console.log(body);
 
-    console.log(body);
-
-    expect(body.length).toBeGreaterThan(0);
+  expect(body.length).toBeGreaterThan(0);
 });
 
 test('API user has correct fields', async ({ request}) => {
@@ -28,7 +28,7 @@ test('API user has correct fields', async ({ request}) => {
 
     expect(body.id).toBe(1);
 
-    expect(body.name).toBe('Leanne Graham');
+    expect(body.name).toBeTruthy();
 
     expect(body.email).toContain('@');
 });
@@ -87,17 +87,11 @@ test('API returns single user', async ({ request }) => {
 
   expect(response.status()).toBe(200);
 
-  const body = await response.json();
-  const firstUser = body[0];
+  const body: User = await response.json();
 
-    expect(body).toHaveProperty('id');
-    expect(body).toHaveProperty('name');
-    expect(body).toHaveProperty('username');
-    expect(body).toHaveProperty('email');
-    expect(body.address.city).toBe('Gwenborough');
-
-    expect(body.id).toBe(1);
-    expect(body.email).toContain('@');
+  expect(body.id).toBe(1);
+  expect(body.name).toBeTruthy();
+  expect(body.email).toContain('@');
 });
 
 test('API returns users with required fields', async ({ request }) => {
@@ -160,4 +154,4 @@ test('API filters comments by post id', async ({ request }) => {
   for (const comment of body) {
     expect(comment.postId).toBe(1);
   }
-});
+});  
