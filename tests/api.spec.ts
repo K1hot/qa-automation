@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, request } from '@playwright/test';
 import { User } from '../types/User';
 
 test( 'API returns user list', async ({ request }) => {
@@ -155,3 +155,21 @@ test('API filters comments by post id', async ({ request }) => {
     expect(comment.postId).toBe(1);
   }
 });  
+
+test('API user contains company and address', async ({ request }) => {
+
+  const responce = await request.get(
+    'https://jsonplaceholder.typicode.com/users/1'
+  );
+
+  expect(responce.status()).toBe(200);
+
+  const body: User = await responce.json();
+
+  expect(body.address.city).toBeTruthy();
+
+  expect(body.company.name).toBeTruthy();
+
+  expect(body.phone).toBeTruthy();
+});
+
