@@ -188,3 +188,93 @@ test('API returns post', async ({ request}) =>{
   expect(body.body).toBeTruthy();
 });
 
+test('API can update user', async ({ request }) => {
+
+  const response = await request.put(
+    'https://jsonplaceholder.typicode.com/users/1',
+    {
+      data: {
+        name: 'George',
+        email: 'george@test.com'
+      }
+    }
+  );
+
+  expect(response.status()).toBe(200);
+
+  const body = await response.json();
+
+  expect(body.name).toBe('George');
+  expect(body.email).toBe('george@test.com');
+});
+
+test('API can patch user name', async ({ request }) => {
+
+  const responce = await request.patch(
+    'https://jsonplaceholder.typicode.com/users/1',
+    {
+      data: {
+        name: 'George'
+      }
+    }
+  );
+  
+  expect(responce.status()).toBe(200);
+
+  const body = await responce.json();
+  expect(body.name).toBe('George');
+});
+
+test('API can delete user', async ({ request }) =>{
+
+  const responce = await request.delete(
+    'https://jsonplaceholder.typicode.com/users/1'
+  );
+
+  expect(responce.status()).toBe(200);
+}); 
+
+test('API can change user name', async ({ request }) =>{
+
+  const  response = await request.put(
+    'https://jsonplaceholder.typicode.com/users/1',
+
+    {
+      data: {
+        name: 'Petr'
+      }
+    }
+  );
+
+  expect(response.status()).toBe(200);
+
+  const body = await response.json();
+  expect(body.name).toBe('Petr');
+
+});
+
+test('API can patch the user name', async ({ request }) => {
+
+  const response = await request.patch(
+    'https://jsonplaceholder.typicode.com/users/1',
+    {
+      data: {
+      "name": 'Alex'
+      }
+    }
+);
+
+expect(response.status()).toBe(200);
+
+const body = await response.json();
+
+expect(body.name).toBe('Alex');
+});
+
+test('API can delete user', async ({ request }) => {
+  const response = await request.delete(
+    'https://jsonplaceholder.typicode.com/users/1'
+  );
+
+  expect(response.status()).toBe(200);
+});
