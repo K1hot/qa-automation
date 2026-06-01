@@ -17,3 +17,18 @@ export type User = {
     catchPhrase: string;
   };
 };
+
+export type invalidUsers = [
+  {
+    username: 'wrong_user',
+    password: 'wrong_password'
+  },
+  {
+    username: '',
+    password: 'secret_sauce'
+  },
+  {
+    username: 'standard_user',
+    password: ''
+  }
+];
