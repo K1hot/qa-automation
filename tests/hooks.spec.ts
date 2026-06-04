@@ -3,19 +3,19 @@ import { test } from '@playwright/test';
     test.describe('Hooks demo', () => {
 
         test.beforeAll(async () => {
-            console.log('beforeALL');
+            console.log('beforeAll');
         });
 
         test.beforeEach(async () => {
             console.log('beforeEach');
         })
 
-        test.afterEach(async () => {
-            console.log('afterEach');
+        test.afterEach(async ({}, testInfo) => {
+            console.log(`afterEach for ${testInfo.title}`);
         })
 
         test.afterAll(async () => {
-            console.log('afterAll');
+            console.log('AFTER ALL HOOK');
         })
 
         test('test 1', async () => {
@@ -27,4 +27,3 @@ import { test } from '@playwright/test';
         });
     });
 
-    
