@@ -1,21 +1,28 @@
-# Playwright Automation Learning
+# QA Automation Portfolio
 
-My learning project for QA Automation using Playwright and TypeScript.
+End-to-end testing project built with Playwright and TypeScript.
 
-## Covered scenarios
+## Features Tested
 
-- Login
-- Add product to cart
-- Inventory page validation
+- Authentication
+- Shopping Cart
+- Inventory
+- API
+- Session Persistence
 
-## Stack
+## Manual QA Artifacts
 
-- TypeScript
-- Playwright
-- Git
+- Test Plan
+- Test Cases
+- Bug Reports
 
-## Run tests
+## Automation
 
-```bash
-npx playwright test
-```
+- UI Tests
+- API Tests
+- Fixtures
+- Page Object Model
+
+## CI
+
+GitHub Actions
